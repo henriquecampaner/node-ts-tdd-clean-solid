@@ -1,7 +1,7 @@
 {
   "name": "node",
   "version": "1.0.0",
-  "description": "",
+  "description": "NodeJs Rest API using TDD, Clean Architecture and Typescript",
   "main": "index.js",
   "scripts": {
     "start": "sucrase-node src/main/server.ts",
