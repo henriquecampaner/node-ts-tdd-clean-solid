@@ -1,8 +1,7 @@
 import { LoginController } from './login'
 import { badRequest, serverError, unauthorized } from '../../helpers/http-helper'
 import { InvalidParamError, MissingParamError } from '../../erros'
-import { EmailValidator } from '../signup/signup-protocols'
-import { Authentication } from '../../../domain/useCases/authentication'
+import { EmailValidator, Authentication, HttpRequest } from '../login/login-protocols'
 
 interface SutTypes {
   sut: LoginController
@@ -42,7 +41,7 @@ const makeAuthentication = ():Authentication => {
   return new AuthenticationStub()
 }
 
-const makeHttpRequest = () => ({
+const makeHttpRequest = ():HttpRequest => ({
   body: {
     email: 'any_email@mail.com',
     password: 'any_password'
