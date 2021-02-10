@@ -3,6 +3,7 @@ import { badRequest, ok, serverError, unauthorized } from '../../helpers/http/ht
 import { MissingParamError } from '../../erros'
 import { Authentication, HttpRequest } from '../login/login-protocols'
 import { Validation } from '../signup/signup-protocols'
+import { AuthenticationModel } from '../../../domain/useCases/authentication'
 
 interface SutTypes {
   sut: LoginController
@@ -33,7 +34,7 @@ const makeSut = (): SutTypes => {
 
 const makeAuthentication = ():Authentication => {
   class AuthenticationStub implements Authentication {
-    async auth (email: string, password: string): Promise<string> {
+    async auth (authentication: AuthenticationModel): Promise<string> {
       return new Promise(resolve => resolve('any_token'))
     }
   }
@@ -55,7 +56,7 @@ describe('Login Controller', () => {
 
     await sut.handle(makeHttpRequest())
 
-    expect(authSpy).toHaveBeenCalledWith('any_email@mail.com', 'any_password')
+    expect(authSpy).toHaveBeenCalledWith({ email: 'any_email@mail.com', password: 'any_password' })
   })
 
   test('Should return 401 if invalid credential provided', async () => {
