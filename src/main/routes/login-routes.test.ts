@@ -35,6 +35,16 @@ describe('POST / login', () => {
       })
       .expect(200)
   })
+
+  test('Should return 401 if invalid credentials provided', async () => {
+    await request(app)
+      .post('/api/login')
+      .send({
+        email: 'henrique@campaner.com',
+        password: 'password123'
+      })
+      .expect(401)
+  })
 })
 
 describe('POST / signup', () => {
