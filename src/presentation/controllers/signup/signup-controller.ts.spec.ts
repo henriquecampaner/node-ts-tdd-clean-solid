@@ -99,12 +99,6 @@ describe('Sign Up Controller', () => {
     expect(httpResponse).toEqual(serverError(new ServerError(null)))
   })
 
-  test('should return 200 if valid data is provided', async () => {
-    const { sut } = makeSut()
-    const httpResponse = await sut.handle(makeFakeResquest())
-    expect(httpResponse).toEqual(ok(makeFakeAccount()))
-  })
-
   test('should call Validation with correct value', async () => {
     const { sut, validationStub } = makeSut()
     const validateSpy = jest.spyOn(validationStub, 'validate')
@@ -142,5 +136,12 @@ describe('Sign Up Controller', () => {
     const httpResponse = await sut.handle(makeHttpRequest())
 
     expect(httpResponse).toEqual(serverError(new Error()))
+  })
+
+  test('Should return 200 if valid credentials are provided', async () => {
+    const { sut } = makeSut()
+    const httpResponse = await sut.handle(makeFakeResquest())
+
+    expect(httpResponse).toEqual(ok({ accessToken: 'any_token' }))
   })
 })
