@@ -1,4 +1,4 @@
-import { forbidden } from '../helpers/http/http-helper'
+import { forbidden, ok } from '../helpers/http/http-helper'
 import { AccessDeniedError } from '../erros'
 import { AuthMiddleware } from './auth-middleware'
 
@@ -70,5 +70,15 @@ describe('Auth Middleware', () => {
     const httpResponse = await sut.handle({})
 
     expect(httpResponse).toEqual(forbidden(new AccessDeniedError()))
+  })
+
+  test('should return 200 if loadAccountByToken returns an account', async () => {
+    const { sut } = makeSut()
+
+    const httpResponse = await sut.handle(makeFakeRequest())
+
+    expect(httpResponse).toEqual(ok({
+      account_id: 'any_id'
+    }))
   })
 })
