@@ -89,7 +89,7 @@ describe('Account MongoDb Repository', () => {
   })
 
   describe('loadByEmail', () => {
-    test('should return an account on LoadByToken', async () => {
+    test('should return an account on LoadByToken with role', async () => {
       const sut = makeSut()
 
       await accountCollection.insertOne({
