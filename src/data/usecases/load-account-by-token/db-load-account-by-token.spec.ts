@@ -11,7 +11,12 @@ const makeDescrypterStub = (): Decrypter => {
   return new DecrypterStub()
 }
 
-const makeSut = () => {
+interface SutTypes {
+  sut: DbLoadAccountByToken
+  decrypterStub: Decrypter
+}
+
+const makeSut = (): SutTypes => {
   const decrypterStub = makeDescrypterStub()
   const sut = new DbLoadAccountByToken(decrypterStub)
 
