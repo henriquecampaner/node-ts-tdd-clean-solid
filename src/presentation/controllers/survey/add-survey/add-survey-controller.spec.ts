@@ -12,7 +12,12 @@ const makeValidationStub = ():Validation => {
   return new ValidationStub()
 }
 
-const makeSut = () => {
+interface SutTypes {
+  sut: AddSurveyController;
+  validationStub:Validation
+}
+
+const makeSut = ():SutTypes => {
   const validationStub = makeValidationStub()
   const sut = new AddSurveyController(validationStub)
 
