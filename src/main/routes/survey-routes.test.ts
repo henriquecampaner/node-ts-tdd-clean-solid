@@ -9,6 +9,27 @@ import env from '../config/env'
 let accountCollection: Collection
 let surveyCollection: Collection
 
+const makeAccessToken = async ():Promise<string> => {
+  const password = await hash('password123', 12)
+  const res = await accountCollection.insertOne({
+    name: 'Henrique',
+    email: 'henrique@campaner.com',
+    password,
+    role: 'admin'
+  })
+
+  const id = res.ops[0]._id
+  const accessToken = sign({ id }, env.jwtSecret)
+
+  await accountCollection.updateOne({ _id: id }, {
+    $set: {
+      accessToken
+    }
+  })
+
+  return accessToken
+}
+
 describe('POST / surveys', () => {
   beforeAll(async () => {
     await MongoHelper.connect(process.env.MONGO_URL)
@@ -45,22 +66,7 @@ describe('POST / surveys', () => {
     })
 
     test('Should return 204 on add survey sucess', async () => {
-      const password = await hash('password123', 12)
-      const res = await accountCollection.insertOne({
-        name: 'Henrique',
-        email: 'henrique@campaner.com',
-        password,
-        role: 'admin'
-      })
-
-      const id = res.ops[0]._id
-      const accessToken = sign({ id }, env.jwtSecret)
-
-      await accountCollection.updateOne({ _id: id }, {
-        $set: {
-          accessToken
-        }
-      })
+      const accessToken = await makeAccessToken()
 
       await request(app)
         .post('/api/surveys')
@@ -89,12 +95,7 @@ describe('POST / surveys', () => {
     })
 
     test('Should return 200 on load survey sucess', async () => {
-      const password = await hash('password123', 12)
-      const res = await accountCollection.insertOne({
-        name: 'Henrique',
-        email: 'henrique@campaner.com',
-        password
-      })
+      const accessToken = await makeAccessToken()
 
       await surveyCollection.insertMany([
         {
@@ -121,15 +122,6 @@ describe('POST / surveys', () => {
           date: new Date()
         }
       ])
-
-      const id = res.ops[0]._id
-      const accessToken = sign({ id }, env.jwtSecret)
-
-      await accountCollection.updateOne({ _id: id }, {
-        $set: {
-          accessToken
-        }
-      })
 
       await request(app)
         .get('/api/surveys')
