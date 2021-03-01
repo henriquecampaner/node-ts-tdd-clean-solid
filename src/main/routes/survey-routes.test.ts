@@ -26,7 +26,7 @@ describe('POST / surveys', () => {
   })
 
   describe('POST / suruveys ', () => {
-    test('Should return 204 on add survey sucess', async () => {
+    test('Should return 403 on add survey with invalid token', async () => {
       await request(app)
         .post('/api/surveys')
         .send({
@@ -44,7 +44,7 @@ describe('POST / surveys', () => {
         .expect(403)
     })
 
-    test('Should return 403 on add survey with invalid token', async () => {
+    test('Should return 204 on add survey sucess', async () => {
       const password = await hash('password123', 12)
       const res = await accountCollection.insertOne({
         name: 'Henrique',
@@ -86,6 +86,55 @@ describe('POST / surveys', () => {
       await request(app)
         .get('/api/surveys')
         .expect(403)
+    })
+
+    test('Should return 200 on load survey sucess', async () => {
+      const password = await hash('password123', 12)
+      const res = await accountCollection.insertOne({
+        name: 'Henrique',
+        email: 'henrique@campaner.com',
+        password
+      })
+
+      await surveyCollection.insertMany([
+        {
+          question: 'any_question',
+          answers: [
+            {
+              answer: 'any_answer',
+              image: 'any_image'
+            }
+          ],
+          date: new Date()
+        },
+        {
+          question: 'other_question',
+          answers: [
+            {
+              answer: 'other_answer',
+              image: 'other_image'
+            },
+            {
+              answer: 'other_answer'
+            }
+          ],
+          date: new Date()
+        }
+      ])
+
+      const id = res.ops[0]._id
+      const accessToken = sign({ id }, env.jwtSecret)
+
+      await accountCollection.updateOne({ _id: id }, {
+        $set: {
+          accessToken
+        }
+      })
+
+      await request(app)
+        .get('/api/surveys')
+        .set('x-access-token', accessToken)
+        .expect(200)
     })
   })
 })
