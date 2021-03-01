@@ -80,4 +80,12 @@ describe('POST / surveys', () => {
         .expect(204)
     })
   })
+
+  describe('GET / suruveys ', () => {
+    test('Should return 403 on load survey with invalid token', async () => {
+      await request(app)
+        .get('/api/surveys')
+        .expect(403)
+    })
+  })
 })
