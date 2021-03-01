@@ -22,27 +22,33 @@ describe('Survey Mongo Repository', () => {
   const makeSut = ():SurveyMongoRepository => {
     return new SurveyMongoRepository()
   }
-  it('should add a survey on success', async () => {
-    const sut = makeSut()
+  describe('Add()', () => {
+    it('should add a survey on success', async () => {
+      const sut = makeSut()
 
-    await sut.add({
-      question: 'any_question',
-      answers: [
-        {
-          answer: 'any_answer',
-          image: 'any_image'
-        },
-        {
-          answer: 'other_answer'
-        }
-      ],
-      date: new Date()
+      await sut.add({
+        question: 'any_question',
+        answers: [
+          {
+            answer: 'any_answer',
+            image: 'any_image'
+          },
+          {
+            answer: 'other_answer'
+          }
+        ],
+        date: new Date()
+      })
+
+      const survey = await surveyCollection.findOne({
+        question: 'any_question'
+      })
+
+      expect(survey).toBeTruthy()
     })
+  })
 
-    const survey = await surveyCollection.findOne({
-      question: 'any_question'
-    })
+  describe('LoadAll()', () => {
 
-    expect(survey).toBeTruthy()
   })
 })
