@@ -5,7 +5,7 @@ import { MissingParamError } from '@/presentation/erros'
 import { Authentication, HttpRequest } from './login-controller-protocols'
 import { Validation } from '../signup/signup-controller.ts-protocols'
 
-interface SutTypes {
+type SutTypes = {
   sut: LoginController
   authenticationStub: Authentication
   validationStub: Validation
