@@ -5,7 +5,7 @@ import {
 import { Validation } from '@/presentation/protocols/validation'
 import { makeAddSurveyalidation } from './add-survey-validation-factory'
 
-jest.mock('../../../../../validaton/validators/validation-composit')
+jest.mock('@/validaton/validators/validation-composit')
 
 describe('AddSurveyValidation Factory', () => {
   test('Should call ValidationComposit with all validations', () => {
