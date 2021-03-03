@@ -1,4 +1,4 @@
-import { InvalidParamError } from '../../presentation/erros'
+import { InvalidParamError } from '@/presentation/erros'
 import { ComparefieldsValidation } from './compare-fields-validation'
 
 const makeSut = ():ComparefieldsValidation => {
