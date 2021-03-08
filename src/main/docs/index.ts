@@ -1,4 +1,4 @@
-import { loginPath, surveyPath } from './paths'
+import { loginPath, surveyPath, signupPath } from './paths'
 
 import { badRequest, serverError, unauthorized, notFound, forbidden } from './components'
 import {
@@ -8,7 +8,8 @@ import {
   surveyAnswerSchema,
   surveySchema,
   surveysSchema,
-  apiKeyAuthSchema
+  apiKeyAuthSchema,
+  signupParamsSchema
 } from './schemas'
 
 export default {
@@ -38,11 +39,13 @@ export default {
   // API tabs (Login routes)
   paths: {
     '/login': loginPath,
+    '/signup': signupPath,
     '/surveys': surveyPath
   },
   schemas: {
     account: accountSchema,
     loginParams: loginParamsSchema,
+    signupParams: signupParamsSchema,
     error: errorSchema,
     surveys: surveysSchema,
     survey: surveySchema,
