@@ -60,7 +60,7 @@ describe('DbLoadSurveyById', () => {
     expect(loadSpy).toHaveBeenCalledWith('any_id')
   })
 
-  it('should throws if LoadSurveysRepository throws', async () => {
+  it('should throws if DbLoadSurveyByIdRepository throws', async () => {
     const { sut, loadSurveyByIdRepositoryStub } = makeSut()
 
     jest
@@ -72,5 +72,13 @@ describe('DbLoadSurveyById', () => {
     const promise = sut.loadById('any_id')
 
     await expect(promise).rejects.toThrow()
+  })
+
+  it('should return a list of Surveys on sucess', async () => {
+    const { sut } = makeSut()
+
+    const surveys = await sut.loadById('any_id')
+
+    expect(surveys).toEqual(makeFakeSurvey())
   })
 })
