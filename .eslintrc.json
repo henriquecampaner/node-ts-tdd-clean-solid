@@ -6,8 +6,7 @@
     },
     "extends": [
         "standard",
-        "prettier/@typescript-eslint",
-        "prettier"
+        "eslint-config-prettier"
     ],
     "parser": "@typescript-eslint/parser",
     "parserOptions": {
@@ -15,9 +14,11 @@
         "sourceType": "module"
     },
     "plugins": [
-        "@typescript-eslint"
+        "@typescript-eslint",
+        "eslint-plugin-prettier"
     ],
     "rules": {
+        "prettier/prettier": "error",
         "no-useless-constructor": "off",
         "@typescript-eslint/no-useless-constructor": ["error"]
     }
