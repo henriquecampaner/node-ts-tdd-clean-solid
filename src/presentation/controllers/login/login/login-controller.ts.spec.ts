@@ -1,6 +1,11 @@
 import { AuthenticationModel } from '@/domain/useCases/authentication'
 import { LoginController } from './login-controller'
-import { badRequest, ok, serverError, unauthorized } from '@/presentation/helpers/http/http-helper'
+import {
+  badRequest,
+  ok,
+  serverError,
+  unauthorized,
+} from '@/presentation/helpers/http/http-helper'
 import { MissingParamError } from '@/presentation/erros'
 import { Authentication, HttpRequest } from './login-controller-protocols'
 import { Validation } from '../signup/signup-controller.ts-protocols'
@@ -11,9 +16,9 @@ type SutTypes = {
   validationStub: Validation
 }
 
-const makeValidation = ():Validation => {
+const makeValidation = (): Validation => {
   class ValidationStub implements Validation {
-    validate (input: any): Error {
+    validate(input: any): Error {
       return null
     }
   }
@@ -28,13 +33,13 @@ const makeSut = (): SutTypes => {
   return {
     sut,
     authenticationStub,
-    validationStub
+    validationStub,
   }
 }
 
-const makeAuthentication = ():Authentication => {
+const makeAuthentication = (): Authentication => {
   class AuthenticationStub implements Authentication {
-    async auth (authentication: AuthenticationModel): Promise<string> {
+    async auth(authentication: AuthenticationModel): Promise<string> {
       return new Promise(resolve => resolve('any_token'))
     }
   }
@@ -42,11 +47,11 @@ const makeAuthentication = ():Authentication => {
   return new AuthenticationStub()
 }
 
-const makeHttpRequest = ():HttpRequest => ({
+const makeHttpRequest = (): HttpRequest => ({
   body: {
     email: 'any_email@mail.com',
-    password: 'any_password'
-  }
+    password: 'any_password',
+  },
 })
 
 describe('Login Controller', () => {
@@ -56,14 +61,17 @@ describe('Login Controller', () => {
 
     await sut.handle(makeHttpRequest())
 
-    expect(authSpy).toHaveBeenCalledWith({ email: 'any_email@mail.com', password: 'any_password' })
+    expect(authSpy).toHaveBeenCalledWith({
+      email: 'any_email@mail.com',
+      password: 'any_password',
+    })
   })
 
   test('Should return 401 if invalid credential provided', async () => {
     const { sut, authenticationStub } = makeSut()
-    jest.spyOn(authenticationStub, 'auth').mockReturnValueOnce(
-      new Promise(resolve => resolve(null))
-    )
+    jest
+      .spyOn(authenticationStub, 'auth')
+      .mockReturnValueOnce(new Promise(resolve => resolve(null)))
 
     const httpResponse = await sut.handle(makeHttpRequest())
 
@@ -72,9 +80,11 @@ describe('Login Controller', () => {
 
   test('Should return 500 if Authentication throws', async () => {
     const { sut, authenticationStub } = makeSut()
-    jest.spyOn(authenticationStub, 'auth').mockReturnValueOnce(
-      new Promise((resolve, reject) => reject(new Error()))
-    )
+    jest
+      .spyOn(authenticationStub, 'auth')
+      .mockReturnValueOnce(
+        new Promise((resolve, reject) => reject(new Error())),
+      )
 
     const httpResponse = await sut.handle(makeHttpRequest())
 
@@ -85,27 +95,29 @@ describe('Login Controller', () => {
     const { sut } = makeSut()
     const httpResponse = await sut.handle(makeHttpRequest())
 
-    expect(httpResponse).toEqual(ok({
-      accessToken: 'any_token'
-    }))
+    expect(httpResponse).toEqual(
+      ok({
+        accessToken: 'any_token',
+      }),
+    )
   })
 
   test('should call Validation with correct value', async () => {
     const { sut, validationStub } = makeSut()
     const validateSpy = jest.spyOn(validationStub, 'validate')
-    const httpRequest = (makeHttpRequest())
+    const httpRequest = makeHttpRequest()
     await sut.handle(httpRequest)
     expect(validateSpy).toHaveBeenCalledWith(httpRequest.body)
   })
 
   test('should return 400 if validion returns an Error', async () => {
     const { sut, validationStub } = makeSut()
-    jest.spyOn(validationStub, 'validate')
+    jest
+      .spyOn(validationStub, 'validate')
       .mockReturnValueOnce(new MissingParamError('any_field'))
 
     const httpResponse = await sut.handle(makeHttpRequest())
 
-    expect(httpResponse)
-      .toEqual(badRequest(new MissingParamError('any_field')))
+    expect(httpResponse).toEqual(badRequest(new MissingParamError('any_field')))
   })
 })

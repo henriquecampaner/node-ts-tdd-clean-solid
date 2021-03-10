@@ -8,27 +8,31 @@ const makeFakeSurveys = (): SurveyModel[] => {
     {
       id: 'any_id',
       question: 'any_question',
-      answers: [{
-        image: 'any_image',
-        answer: 'any_answer'
-      }],
-      date: new Date()
+      answers: [
+        {
+          image: 'any_image',
+          answer: 'any_answer',
+        },
+      ],
+      date: new Date(),
     },
     {
       id: 'other_id',
       question: 'other_question',
-      answers: [{
-        image: 'other_image',
-        answer: 'other_answer'
-      }],
-      date: new Date()
-    }
+      answers: [
+        {
+          image: 'other_image',
+          answer: 'other_answer',
+        },
+      ],
+      date: new Date(),
+    },
   ]
 }
 
 const makeLoadSurveysRepositoryStub = () => {
   class LoadSurveysRepositoryStub implements LoadSurveysRepository {
-    loadAll (): Promise<SurveyModel[]> {
+    loadAll(): Promise<SurveyModel[]> {
       return new Promise(resolve => resolve(makeFakeSurveys()))
     }
   }
@@ -42,7 +46,7 @@ const makeSut = () => {
 
   return {
     sut,
-    loadSurveysRepositoryStub
+    loadSurveysRepositoryStub,
   }
 }
 
@@ -67,9 +71,10 @@ describe('DbLoadSurveys', () => {
   it('should throws if LoadSurveysRepository throws', async () => {
     const { sut, loadSurveysRepositoryStub } = makeSut()
 
-    jest.spyOn(loadSurveysRepositoryStub, 'loadAll')
+    jest
+      .spyOn(loadSurveysRepositoryStub, 'loadAll')
       .mockReturnValueOnce(
-        new Promise((resolve, reject) => reject(new Error()))
+        new Promise((resolve, reject) => reject(new Error())),
       )
 
     const promise = sut.load()

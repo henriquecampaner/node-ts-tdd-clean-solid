@@ -1,7 +1,7 @@
 import { InvalidParamError } from '@/presentation/erros'
 import { ComparefieldsValidation } from './compare-fields-validation'
 
-const makeSut = ():ComparefieldsValidation => {
+const makeSut = (): ComparefieldsValidation => {
   return new ComparefieldsValidation('field', 'fieldToCompare')
 }
 
@@ -11,7 +11,7 @@ describe('CompareFields Validation', () => {
 
     const error = sut.validate({
       field: 'any_value',
-      fieldToCompare: 'different_value'
+      fieldToCompare: 'different_value',
     })
     expect(error).toEqual(new InvalidParamError('fieldToCompare'))
   })
@@ -21,7 +21,7 @@ describe('CompareFields Validation', () => {
 
     const error = sut.validate({
       field: 'any_value',
-      fieldToCompare: 'any_value'
+      fieldToCompare: 'any_value',
     })
     expect(error).toBeFalsy()
   })

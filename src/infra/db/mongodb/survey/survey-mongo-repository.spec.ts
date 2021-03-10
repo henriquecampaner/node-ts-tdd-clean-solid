@@ -1,4 +1,3 @@
-
 import { Collection } from 'mongodb'
 import { MongoHelper } from '../helpers/mongo-helper'
 import { SurveyMongoRepository } from './survey-mongo-repository'
@@ -19,7 +18,7 @@ describe('Survey Mongo Repository', () => {
     await surveyCollection.deleteMany({})
   })
 
-  const makeSut = ():SurveyMongoRepository => {
+  const makeSut = (): SurveyMongoRepository => {
     return new SurveyMongoRepository()
   }
   describe('Add()', () => {
@@ -31,17 +30,17 @@ describe('Survey Mongo Repository', () => {
         answers: [
           {
             answer: 'any_answer',
-            image: 'any_image'
+            image: 'any_image',
           },
           {
-            answer: 'other_answer'
-          }
+            answer: 'other_answer',
+          },
         ],
-        date: new Date()
+        date: new Date(),
       })
 
       const survey = await surveyCollection.findOne({
-        question: 'any_question'
+        question: 'any_question',
       })
 
       expect(survey).toBeTruthy()
@@ -56,24 +55,24 @@ describe('Survey Mongo Repository', () => {
           answers: [
             {
               answer: 'any_answer',
-              image: 'any_image'
-            }
+              image: 'any_image',
+            },
           ],
-          date: new Date()
+          date: new Date(),
         },
         {
           question: 'other_question',
           answers: [
             {
               answer: 'other_answer',
-              image: 'other_image'
+              image: 'other_image',
             },
             {
-              answer: 'other_answer'
-            }
+              answer: 'other_answer',
+            },
           ],
-          date: new Date()
-        }
+          date: new Date(),
+        },
       ])
 
       const sut = makeSut()

@@ -24,14 +24,14 @@ describe('POST / login', () => {
     const password = await hash('password123', 12)
     await accountCollection.insertOne({
       email: 'henrique@campaner.com',
-      password
+      password,
     })
 
     await request(app)
       .post('/api/login')
       .send({
         email: 'henrique@campaner.com',
-        password: 'password123'
+        password: 'password123',
       })
       .expect(200)
   })
@@ -41,7 +41,7 @@ describe('POST / login', () => {
       .post('/api/login')
       .send({
         email: 'henrique@campaner.com',
-        password: 'password123'
+        password: 'password123',
       })
       .expect(401)
   })
@@ -68,7 +68,7 @@ describe('POST / signup', () => {
         name: 'Henrique',
         email: 'henrique@campaner.com',
         password: 'password123',
-        passwordConfirmation: 'password123'
+        passwordConfirmation: 'password123',
       })
       .expect(200)
   })

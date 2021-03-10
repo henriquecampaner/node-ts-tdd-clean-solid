@@ -1,6 +1,6 @@
 import {
   RequiredFieldValidation,
-  ValidationComposit
+  ValidationComposit,
 } from '@/validaton/validators'
 import { Validation } from '@/presentation/protocols/validation'
 import { makeAddSurveyalidation } from './add-survey-validation-factory'

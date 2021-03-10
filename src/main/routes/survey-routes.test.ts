@@ -9,23 +9,26 @@ import env from '../config/env'
 let accountCollection: Collection
 let surveyCollection: Collection
 
-const makeAccessToken = async ():Promise<string> => {
+const makeAccessToken = async (): Promise<string> => {
   const password = await hash('password123', 12)
   const res = await accountCollection.insertOne({
     name: 'Henrique',
     email: 'henrique@campaner.com',
     password,
-    role: 'admin'
+    role: 'admin',
   })
 
   const id = res.ops[0]._id
   const accessToken = sign({ id }, env.jwtSecret)
 
-  await accountCollection.updateOne({ _id: id }, {
-    $set: {
-      accessToken
-    }
-  })
+  await accountCollection.updateOne(
+    { _id: id },
+    {
+      $set: {
+        accessToken,
+      },
+    },
+  )
 
   return accessToken
 }
@@ -55,12 +58,12 @@ describe('POST / surveys', () => {
           answers: [
             {
               answer: 'Answer 1',
-              image: 'http://image-name.com'
+              image: 'http://image-name.com',
             },
             {
-              answer: 'Answer 2'
-            }
-          ]
+              answer: 'Answer 2',
+            },
+          ],
         })
         .expect(403)
     })
@@ -76,12 +79,12 @@ describe('POST / surveys', () => {
           answers: [
             {
               answer: 'Answer 1',
-              image: 'http://image-name.com'
+              image: 'http://image-name.com',
             },
             {
-              answer: 'Answer 2'
-            }
-          ]
+              answer: 'Answer 2',
+            },
+          ],
         })
         .expect(204)
     })
@@ -89,9 +92,7 @@ describe('POST / surveys', () => {
 
   describe('GET / suruveys ', () => {
     test('Should return 403 on load survey with invalid token', async () => {
-      await request(app)
-        .get('/api/surveys')
-        .expect(403)
+      await request(app).get('/api/surveys').expect(403)
     })
 
     test('Should return 200 on load survey sucess', async () => {
@@ -103,24 +104,24 @@ describe('POST / surveys', () => {
           answers: [
             {
               answer: 'any_answer',
-              image: 'any_image'
-            }
+              image: 'any_image',
+            },
           ],
-          date: new Date()
+          date: new Date(),
         },
         {
           question: 'other_question',
           answers: [
             {
               answer: 'other_answer',
-              image: 'other_image'
+              image: 'other_image',
             },
             {
-              answer: 'other_answer'
-            }
+              answer: 'other_answer',
+            },
           ],
-          date: new Date()
-        }
+          date: new Date(),
+        },
       ])
 
       await request(app)

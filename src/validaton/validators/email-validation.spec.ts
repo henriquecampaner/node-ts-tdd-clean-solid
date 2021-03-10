@@ -4,14 +4,14 @@ import { EmailValidation } from './email-validation'
 import { EmailValidator } from '../protocols/emailValidator'
 
 type SutTypes = {
-  sut: EmailValidation;
-  emailValidatorStub: EmailValidator;
+  sut: EmailValidation
+  emailValidatorStub: EmailValidator
 }
 
 // System Under Test
-const makeEmailValidator = ():EmailValidator => {
+const makeEmailValidator = (): EmailValidator => {
   class EmailValidatorStub implements EmailValidator {
-    isValid (email: string): boolean {
+    isValid(email: string): boolean {
       return true
     }
   }
@@ -19,14 +19,14 @@ const makeEmailValidator = ():EmailValidator => {
   return new EmailValidatorStub()
 }
 
-const makeSut = ():SutTypes => {
+const makeSut = (): SutTypes => {
   const emailValidatorStub = makeEmailValidator()
 
   const sut = new EmailValidation('email', emailValidatorStub)
 
   return {
     sut,
-    emailValidatorStub
+    emailValidatorStub,
   }
 }
 describe('Sign Up Controller', () => {

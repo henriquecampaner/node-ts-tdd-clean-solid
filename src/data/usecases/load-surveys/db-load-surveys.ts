@@ -3,9 +3,9 @@ import { LoadSurveys } from '@/domain/useCases/load-surveys'
 import { LoadSurveysRepository } from '@/data/protocols/db/survey/load-survey-repository'
 
 export class DbLoadSurveys implements LoadSurveys {
-  constructor (private readonly loadSurveysRepository: LoadSurveysRepository) {}
+  constructor(private readonly loadSurveysRepository: LoadSurveysRepository) {}
 
-  async load (): Promise<SurveyModel[]> {
+  async load(): Promise<SurveyModel[]> {
     const surveys = await this.loadSurveysRepository.loadAll()
 
     return surveys

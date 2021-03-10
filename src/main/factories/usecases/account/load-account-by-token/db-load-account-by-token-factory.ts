@@ -4,7 +4,7 @@ import { JwtAdapter } from '@/infra/criptography/jwt/jwt-adapter'
 import { AccountMongoRepository } from '@/infra/db/mongodb/account/account-mongo-repository'
 import env from '@/main/config/env'
 
-export const makeDbLoadAccountByToken = ():LoadAccountByToken => {
+export const makeDbLoadAccountByToken = (): LoadAccountByToken => {
   const jwtAdapter = new JwtAdapter(env.jwtSecret)
   const accountMongoRepository = new AccountMongoRepository()
 
