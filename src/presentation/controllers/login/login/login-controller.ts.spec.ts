@@ -1,4 +1,4 @@
-import { AuthenticationModel } from '@/domain/useCases/authentication'
+import { AuthenticationModel } from '@/domain/useCases/account/authentication'
 import { LoginController } from './login-controller'
 import {
   badRequest,

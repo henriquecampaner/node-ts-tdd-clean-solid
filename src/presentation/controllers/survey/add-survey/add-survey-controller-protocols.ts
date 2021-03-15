@@ -1,2 +1,2 @@
 export * from '@/presentation/protocols'
-export * from '@/domain/useCases/add-survey'
+export * from '@/domain/useCases/survey/add-survey'
