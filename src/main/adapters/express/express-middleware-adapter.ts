@@ -4,7 +4,7 @@ import { NextFunction, Request, Response } from 'express'
 export const adapterMiddleware = (middleware: Middleware) => {
   return async (request: Request, response: Response, next: NextFunction) => {
     const httpRequest: HttpRequest = {
-      headers: request.headers
+      headers: request.headers,
     }
 
     const httpResponse = await middleware.handle(httpRequest)
@@ -14,7 +14,7 @@ export const adapterMiddleware = (middleware: Middleware) => {
       next()
     } else {
       response.status(httpResponse.statusCode).json({
-        error: httpResponse.body.message
+        error: httpResponse.body.message,
       })
     }
   }

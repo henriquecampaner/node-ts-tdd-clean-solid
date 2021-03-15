@@ -1,6 +1,7 @@
 import { Collection } from 'mongodb'
 import { MongoHelper } from '../helpers/mongo-helper'
 import { AccountMongoRepository } from './account-mongo-repository'
+import { mockAddAccountParams } from '@/domain/test'
 
 let accountCollection: Collection
 
@@ -18,18 +19,14 @@ describe('Account MongoDb Repository', () => {
     await accountCollection.deleteMany({})
   })
 
-  const makeSut = ():AccountMongoRepository => {
+  const makeSut = (): AccountMongoRepository => {
     return new AccountMongoRepository()
   }
 
   describe('add', () => {
     test('Should return an account on sucess', async () => {
       const sut = makeSut()
-      const account = await sut.add({
-        name: 'any_name',
-        email: 'any_email@mail.com',
-        password: 'any_password'
-      })
+      const account = await sut.add(mockAddAccountParams())
       expect(account).toBeTruthy()
       expect(account.id).toBeTruthy()
       expect(account.name).toBe('any_name')
@@ -42,15 +39,9 @@ describe('Account MongoDb Repository', () => {
     test('should return an account on LoadByEmail', async () => {
       const sut = makeSut()
 
-      await accountCollection.insertOne({
-        name: 'any_name',
-        email: 'any_email@mail.com',
-        password: 'any_password'
-      })
+      await accountCollection.insertOne(mockAddAccountParams())
 
-      const account = await sut.loadByEmail(
-        'any_email@mail.com'
-      )
+      const account = await sut.loadByEmail('any_email@mail.com')
       expect(account).toBeTruthy()
       expect(account.id).toBeTruthy()
       expect(account.name).toBe('any_name')
@@ -61,9 +52,7 @@ describe('Account MongoDb Repository', () => {
     test('should return null if LoadByEmail fails', async () => {
       const sut = makeSut()
 
-      const account = await sut.loadByEmail(
-        'any_email@mail.com'
-      )
+      const account = await sut.loadByEmail('any_email@mail.com')
       expect(account).toBeFalsy()
     })
   })
@@ -72,16 +61,14 @@ describe('Account MongoDb Repository', () => {
     test('should update the account accessToken on updateAccessToken success', async () => {
       const sut = makeSut()
 
-      const result = await accountCollection.insertOne({
-        name: 'any_name',
-        email: 'any_email@mail.com',
-        password: 'any_password'
-      })
+      const result = await accountCollection.insertOne(mockAddAccountParams())
 
       expect(result.ops[0].accessToken).toBeFalsy()
 
       await sut.updateAccessToken(result.ops[0]._id, 'any_token')
-      const account = await accountCollection.findOne({ _id: result.ops[0]._id })
+      const account = await accountCollection.findOne({
+        _id: result.ops[0]._id,
+      })
 
       expect(account).toBeTruthy()
       expect(account.accessToken).toBe('any_token')
@@ -96,12 +83,10 @@ describe('Account MongoDb Repository', () => {
         name: 'any_name',
         email: 'any_email@mail.com',
         password: 'any_password',
-        accessToken: 'any_token'
+        accessToken: 'any_token',
       })
 
-      const account = await sut.loadByToken(
-        'any_token'
-      )
+      const account = await sut.loadByToken('any_token')
       expect(account).toBeTruthy()
       expect(account.id).toBeTruthy()
       expect(account.name).toBe('any_name')
@@ -117,12 +102,10 @@ describe('Account MongoDb Repository', () => {
         email: 'any_email@mail.com',
         password: 'any_password',
         accessToken: 'any_token',
-        role: 'admin'
+        role: 'admin',
       })
 
-      const account = await sut.loadByToken(
-        'any_token', 'admin'
-      )
+      const account = await sut.loadByToken('any_token', 'admin')
       expect(account).toBeTruthy()
       expect(account.id).toBeTruthy()
       expect(account.name).toBe('any_name')
@@ -137,12 +120,10 @@ describe('Account MongoDb Repository', () => {
         name: 'any_name',
         email: 'any_email@mail.com',
         password: 'any_password',
-        accessToken: 'any_token'
+        accessToken: 'any_token',
       })
 
-      const account = await sut.loadByToken(
-        'any_token', 'admin'
-      )
+      const account = await sut.loadByToken('any_token', 'admin')
       expect(account).toBeFalsy()
     })
 
@@ -154,12 +135,10 @@ describe('Account MongoDb Repository', () => {
         email: 'any_email@mail.com',
         password: 'any_password',
         accessToken: 'any_token',
-        role: 'admin'
+        role: 'admin',
       })
 
-      const account = await sut.loadByToken(
-        'any_token'
-      )
+      const account = await sut.loadByToken('any_token')
       expect(account).toBeTruthy()
       expect(account.id).toBeTruthy()
       expect(account.name).toBe('any_name')

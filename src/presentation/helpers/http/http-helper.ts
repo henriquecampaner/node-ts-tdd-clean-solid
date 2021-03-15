@@ -3,30 +3,30 @@ import { HttpResponse } from '@/presentation/protocols/http'
 
 export const forbidden = (error: Error): HttpResponse => ({
   statusCode: 403,
-  body: error
+  body: error,
 })
 
 export const badRequest = (error: Error): HttpResponse => ({
   statusCode: 400,
-  body: error
+  body: error,
 })
 
 export const unauthorized = (): HttpResponse => ({
   statusCode: 401,
-  body: new Unauthorized()
+  body: new Unauthorized(),
 })
 
 export const serverError = (error: Error): HttpResponse => ({
   statusCode: 500,
-  body: new ServerError(error.stack)
+  body: new ServerError(error.stack),
 })
 
-export const ok = (data:any): HttpResponse => ({
+export const ok = (data: any): HttpResponse => ({
   statusCode: 200,
-  body: data
+  body: data,
 })
 
 export const noContent = (): HttpResponse => ({
   statusCode: 204,
-  body: null
+  body: null,
 })

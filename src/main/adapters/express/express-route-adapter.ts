@@ -3,8 +3,10 @@ import { Request, Response } from 'express'
 
 export const adaptRoute = (controller: Controller) => {
   return async (request: Request, response: Response) => {
-    const httpResquest:HttpRequest = {
-      body: request.body
+    const httpResquest: HttpRequest = {
+      body: request.body,
+      params: request.params,
+      accountId: request.accountId,
     }
 
     const httpResponse = await controller.handle(httpResquest)
@@ -13,7 +15,7 @@ export const adaptRoute = (controller: Controller) => {
       response.status(httpResponse.statusCode).json(httpResponse.body)
     } else {
       response.status(httpResponse.statusCode).json({
-        error: httpResponse.body.message
+        error: httpResponse.body.message,
       })
     }
   }

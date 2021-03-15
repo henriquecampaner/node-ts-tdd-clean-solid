@@ -5,9 +5,12 @@ import { makeDbAuthentication } from '@/main/factories/usecases/account/authenti
 import { makeLogDecorator } from '@/main/factories/decorators/log-controller-decorator-factory'
 import { makeSignupValidation } from './signup-validation-factory'
 
-export const makeSignUpController = ():Controller => {
+export const makeSignUpController = (): Controller => {
   const controller = new SignUpController(
-    makeDbAddAccount(), makeSignupValidation(), makeDbAuthentication())
+    makeDbAddAccount(),
+    makeSignupValidation(),
+    makeDbAuthentication(),
+  )
 
   return makeLogDecorator(controller)
 }

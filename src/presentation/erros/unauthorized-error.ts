@@ -1,5 +1,5 @@
 export class Unauthorized extends Error {
-  constructor () {
+  constructor() {
     super('Unauthorized')
     this.name = 'UnauthorizedError'
   }

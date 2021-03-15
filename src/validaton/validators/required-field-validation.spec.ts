@@ -1,7 +1,7 @@
 import { MissingParamError } from '@/presentation/erros'
 import { RequiredFieldValidation } from './required-field-validation'
 
-const makeSut = ():RequiredFieldValidation => {
+const makeSut = (): RequiredFieldValidation => {
   return new RequiredFieldValidation('field')
 }
 
@@ -10,7 +10,7 @@ describe('RequiredField Validation', () => {
     const sut = makeSut()
 
     const error = sut.validate({
-      name: 'any_name'
+      name: 'any_name',
     })
     expect(error).toEqual(new MissingParamError('field'))
   })
@@ -19,7 +19,7 @@ describe('RequiredField Validation', () => {
     const sut = makeSut()
 
     const error = sut.validate({
-      field: 'any_name'
+      field: 'any_name',
     })
     expect(error).toBeFalsy()
   })
