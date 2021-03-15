@@ -1,4 +1,4 @@
-import { AuthenticationModel } from '@/domain/useCases/account/authentication'
+import { AuthenticationParams } from '@/domain/useCases/account/authentication'
 import { LoginController } from './login-controller'
 import {
   badRequest,
@@ -39,7 +39,7 @@ const makeSut = (): SutTypes => {
 
 const makeAuthentication = (): Authentication => {
   class AuthenticationStub implements Authentication {
-    async auth(authentication: AuthenticationModel): Promise<string> {
+    async auth(authentication: AuthenticationParams): Promise<string> {
       return new Promise(resolve => resolve('any_token'))
     }
   }

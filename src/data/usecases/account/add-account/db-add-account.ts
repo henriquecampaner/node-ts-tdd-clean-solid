@@ -1,7 +1,7 @@
 import { LoadAccountByEmailRepository } from '../authentication/db-authentication-protocols'
 import {
   AddAccount,
-  AddAccountModel,
+  AddAccountParams,
   AccountModel,
   Hasher,
   AddAccountRepository,
@@ -14,7 +14,7 @@ export class DbAddAccount implements AddAccount {
     private readonly loadAccountByEmailRepository: LoadAccountByEmailRepository,
   ) {}
 
-  async add(accountData: AddAccountModel): Promise<AccountModel> {
+  async add(accountData: AddAccountParams): Promise<AccountModel> {
     const existAccount = await this.loadAccountByEmailRepository.loadByEmail(
       accountData.email,
     )
