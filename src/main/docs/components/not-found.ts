@@ -1,3 +1,3 @@
 export const notFound = {
-  description: 'Not found'
+  description: 'Not found',
 }

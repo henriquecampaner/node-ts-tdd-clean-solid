@@ -2,7 +2,7 @@ export const errorSchema = {
   type: 'object',
   properties: {
     error: {
-      type: 'string'
-    }
-  }
+      type: 'string',
+    },
+  },
 }

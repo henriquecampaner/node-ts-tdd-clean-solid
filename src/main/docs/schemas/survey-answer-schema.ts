@@ -2,10 +2,10 @@ export const surveyAnswerSchema = {
   type: 'object',
   properties: {
     image: {
-      type: 'string'
+      type: 'string',
     },
     answer: {
-      type: 'string'
-    }
-  }
+      type: 'string',
+    },
+  },
 }
