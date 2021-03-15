@@ -2,8 +2,8 @@ export const surveyPath = {
   get: {
     security: [
       {
-        apiKeyAuth: []
-      }
+        apiKeyAuth: [],
+      },
     ],
     tags: ['Surveys'],
     summary: 'Route to list the surveys',
@@ -13,27 +13,27 @@ export const surveyPath = {
         content: {
           'application/json': {
             schema: {
-              $ref: '#/schemas/surveys'
-            }
-          }
-        }
+              $ref: '#/schemas/surveys',
+            },
+          },
+        },
       },
       403: {
-        $ref: '#/components/forbidden'
+        $ref: '#/components/forbidden',
       },
       404: {
-        $ref: '#/components/notFound'
+        $ref: '#/components/notFound',
       },
       500: {
-        $ref: '#/components/serverError'
-      }
-    }
+        $ref: '#/components/serverError',
+      },
+    },
   },
   post: {
     security: [
       {
-        apiKeyAuth: []
-      }
+        apiKeyAuth: [],
+      },
     ],
     tags: ['Surveys'],
     summary: 'Route to create an survey',
@@ -41,24 +41,24 @@ export const surveyPath = {
       content: {
         'application/json': {
           schema: {
-            $ref: '#/schemas/addSurveyParams'
-          }
-        }
-      }
+            $ref: '#/schemas/addSurveyParams',
+          },
+        },
+      },
     },
     responses: {
       204: {
-        description: 'Success'
+        description: 'Success',
       },
       403: {
-        $ref: '#/components/forbidden'
+        $ref: '#/components/forbidden',
       },
       404: {
-        $ref: '#/components/notFound'
+        $ref: '#/components/notFound',
       },
       500: {
-        $ref: '#/components/serverError'
-      }
-    }
-  }
+        $ref: '#/components/serverError',
+      },
+    },
+  },
 }

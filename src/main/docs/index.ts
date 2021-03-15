@@ -1,6 +1,12 @@
-import { loginPath, surveyPath, signupPath } from './paths'
+import { loginPath, surveyPath, signupPath, surveyResultPath } from './paths'
 
-import { badRequest, serverError, unauthorized, notFound, forbidden } from './components'
+import {
+  badRequest,
+  serverError,
+  unauthorized,
+  notFound,
+  forbidden,
+} from './components'
 import {
   accountSchema,
   loginParamsSchema,
@@ -10,7 +16,9 @@ import {
   surveysSchema,
   apiKeyAuthSchema,
   signupParamsSchema,
-  addSurveySchema
+  addSurveySchema,
+  saveSurveyParamsSchema,
+  surveyResultSchema,
 } from './schemas'
 
 export default {
@@ -18,30 +26,31 @@ export default {
   info: {
     title: 'Clean Node Api',
     description: 'API using Clean/SOLID/DDD/TDD',
-    version: '1.0.0'
+    version: '1.0.0',
   },
   license: {
     name: 'GPL-3.0-or-later',
-    url: 'https://spdx.org/licenses/GPL-3.0-or-later.html'
+    url: 'https://spdx.org/licenses/GPL-3.0-or-later.html',
   },
   servers: [
     {
-      url: '/api'
-    }
+      url: '/api',
+    },
   ],
   tags: [
     {
-      name: 'Login'
+      name: 'Login',
     },
     {
-      name: 'Surveys'
-    }
+      name: 'Surveys',
+    },
   ],
   // API tabs (Login routes)
   paths: {
     '/login': loginPath,
     '/signup': signupPath,
-    '/surveys': surveyPath
+    '/surveys': surveyPath,
+    '/surveys/{surveyId}/results': surveyResultPath,
   },
   schemas: {
     account: accountSchema,
@@ -51,17 +60,19 @@ export default {
     surveys: surveysSchema,
     survey: surveySchema,
     surveyAnswer: surveyAnswerSchema,
-    addSurveyParams: addSurveySchema
+    addSurveyParams: addSurveySchema,
+    saveSurveyParams: saveSurveyParamsSchema,
+    surveyResult: surveyResultSchema,
     // key = schema inside paths
   },
   components: {
     securitySchemes: {
-      apiKeyAuth: apiKeyAuthSchema
+      apiKeyAuth: apiKeyAuthSchema,
     },
     badRequest,
     serverError,
     unauthorized,
     notFound,
-    forbidden
-  }
+    forbidden,
+  },
 }
