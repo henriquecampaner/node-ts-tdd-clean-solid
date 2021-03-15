@@ -16,7 +16,7 @@ import { SurveyResultModel } from '@/domain/models/survey-result'
 export const mockAddSurvey = (): AddSurvey => {
   class AddSurveyStub implements AddSurvey {
     async add(data: AddSurveyParams): Promise<void> {
-      return new Promise(resolve => resolve())
+      return Promise.resolve()
     }
   }
 
@@ -26,7 +26,7 @@ export const mockAddSurvey = (): AddSurvey => {
 export const mockLoadSurveys = () => {
   class LoadSurveysStub implements LoadSurveys {
     async load(): Promise<SurveyModel[]> {
-      return new Promise(resolve => resolve(mockSurveysModel()))
+      return Promise.resolve(mockSurveysModel())
     }
   }
   return new LoadSurveysStub()
@@ -35,7 +35,7 @@ export const mockLoadSurveys = () => {
 export const mockLoadSurveyById = (): LoadSurveyById => {
   class LoadSurveyByIdStub implements LoadSurveyById {
     loadById(id: string): Promise<SurveyModel> {
-      return new Promise(resolve => resolve(mockSurvey()))
+      return Promise.resolve(mockSurvey())
     }
   }
 
@@ -45,7 +45,7 @@ export const mockLoadSurveyById = (): LoadSurveyById => {
 export const mockSaveSurveyResult = (): SaveSurveyResult => {
   class SaveSurveyResultStub implements SaveSurveyResult {
     save(data: SaveSurveyResultParams): Promise<SurveyResultModel> {
-      return new Promise(resolve => resolve(mockSaveSurveyResultParams()))
+      return Promise.resolve(mockSaveSurveyResultParams())
     }
   }
   return new SaveSurveyResultStub()

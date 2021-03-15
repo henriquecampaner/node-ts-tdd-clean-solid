@@ -8,7 +8,7 @@ import { LoadSurveysRepository } from '../protocols/db/survey/load-survey-reposi
 export const mockAddSurveyRepository = (): AddSurveyRepository => {
   class AddSurveyRepositoryStub implements AddSurveyRepository {
     add(surveyData: AddSurveyParams): Promise<void> {
-      return new Promise(resolve => resolve())
+      return Promise.resolve()
     }
   }
 
@@ -18,7 +18,7 @@ export const mockAddSurveyRepository = (): AddSurveyRepository => {
 export const mockLoadSurveyByIdRepository = () => {
   class LoadSurveyByIdRepositoryStub implements LoadSurveyByIdRepository {
     loadById(id: string): Promise<SurveyModel> {
-      return new Promise(resolve => resolve(mockSurvey()))
+      return Promise.resolve(mockSurvey())
     }
   }
 
@@ -28,7 +28,7 @@ export const mockLoadSurveyByIdRepository = () => {
 export const mockLoadSurveysRepository = () => {
   class LoadSurveysRepositoryStub implements LoadSurveysRepository {
     loadAll(): Promise<SurveyModel[]> {
-      return new Promise(resolve => resolve(mockSurveysModel()))
+      return Promise.resolve(mockSurveysModel())
     }
   }
 
