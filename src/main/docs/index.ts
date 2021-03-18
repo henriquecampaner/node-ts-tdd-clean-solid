@@ -19,6 +19,7 @@ import {
   addSurveySchema,
   saveSurveyParamsSchema,
   surveyResultSchema,
+  surveyResultAnswerSchema,
 } from './schemas'
 
 export default {
@@ -63,6 +64,7 @@ export default {
     addSurveyParams: addSurveySchema,
     saveSurveyParams: saveSurveyParamsSchema,
     surveyResult: surveyResultSchema,
+    surveyResultAnswer: surveyResultAnswerSchema,
     // key = schema inside paths
   },
   components: {
