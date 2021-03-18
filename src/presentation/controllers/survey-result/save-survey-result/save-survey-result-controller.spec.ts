@@ -11,7 +11,7 @@ import {
 } from '@/presentation/helpers/http/http-helper'
 import { InvalidParamError } from '@/presentation/erros'
 import MockDate from 'mockdate'
-import { throwError, mockSurveyResultModel } from '@/domain/test'
+import { throwError } from '@/domain/test'
 import { mockLoadSurveyById, mockSaveSurveyResult } from '@/presentation/test'
 
 type SutTypes = {
@@ -128,6 +128,13 @@ describe('SaveSurveyResult Controller', () => {
     const { sut } = makeSut()
     const httpResponse = await sut.handle(makeFakeRequest())
 
-    expect(httpResponse).toEqual(ok(mockSurveyResultModel()))
+    expect(httpResponse).toEqual(
+      ok({
+        accountId: 'any_account_id',
+        answer: 'any_answer',
+        date: new Date(),
+        surveyId: 'any_survey_id',
+      }),
+    )
   })
 })
