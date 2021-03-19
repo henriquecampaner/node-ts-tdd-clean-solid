@@ -3,7 +3,10 @@ import { DbSaveResult } from '@/data/usecases/survey-result/save-survey-result/d
 import { SurveyResultMongoRepository } from '@/infra/db/mongodb/survey-result/survey-result-mongo-repository'
 
 export const makeDbSaveSurveResult = (): SaveSurveyResult => {
-  const surveyMongoRepository = new SurveyResultMongoRepository()
+  const surveyResultMongoRepository = new SurveyResultMongoRepository()
 
-  return new DbSaveResult(surveyMongoRepository)
+  return new DbSaveResult(
+    surveyResultMongoRepository,
+    surveyResultMongoRepository,
+  )
 }
