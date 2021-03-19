@@ -9,8 +9,6 @@ export class DbLoadSurveyResult implements LoadsurveyResult {
   ) {}
 
   async load(surveyId: string): Promise<SurveyResultModel> {
-    await this.loadSurveyResultRepository.loadBySurveyId(surveyId)
-
-    return Promise.resolve(null)
+    return await this.loadSurveyResultRepository.loadBySurveyId(surveyId)
   }
 }
