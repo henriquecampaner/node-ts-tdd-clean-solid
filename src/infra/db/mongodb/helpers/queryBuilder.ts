@@ -1,6 +1,13 @@
 export class QueryBuilder {
   private readonly query = []
 
+  private addStep(step: string, data: object): QueryBuilder {
+    this.query.push({
+      [step]: data,
+    })
+    return this
+  }
+
   match(data: object): QueryBuilder {
     this.query.push({
       $match: data,
@@ -13,6 +20,10 @@ export class QueryBuilder {
       $group: data,
     })
     return this
+  }
+
+  sort(data: object): QueryBuilder {
+    return this.addStep('$sort', data)
   }
 
   unwind(data: object): QueryBuilder {

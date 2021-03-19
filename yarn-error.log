@@ -1,8 +1,8 @@
 Arguments: 
-  /usr/local/Cellar/node@14/14.15.5/bin/node /usr/local/bin/yarn add coverals -D
+  /usr/local/Cellar/node@14/14.15.5/bin/node /usr/local/bin/yarn add @types/mongo-round -D
 
 PATH: 
-  /Users/henriquecampaner/.zinit/polaris/sbin:/Users/henriquecampaner/.zinit/polaris/bin:/Users/henriquecampaner/.zinit/polaris/usr/sbin:/Users/henriquecampaner/.zinit/polaris/usr/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin:/Users/henriquecampaner/Android/Sdk/emulator:/Users/henriquecampaner/Android/Sdk/tools:/Users/henriquecampaner/Android/Sdk/tools/bin:/Users/henriquecampaner/Android/Sdk/platform-tools
+  /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin:/Users/henriquecampaner/.zinit/polaris/sbin:/Users/henriquecampaner/.zinit/polaris/bin:/Users/henriquecampaner/.zinit/polaris/usr/sbin:/Users/henriquecampaner/.zinit/polaris/usr/bin:/Users/henriquecampaner/Android/Sdk/emulator:/Users/henriquecampaner/Android/Sdk/tools:/Users/henriquecampaner/Android/Sdk/tools/bin:/Users/henriquecampaner/Android/Sdk/platform-tools:/Users/henriquecampaner/Android/Sdk/emulator:/Users/henriquecampaner/Android/Sdk/tools:/Users/henriquecampaner/Android/Sdk/tools/bin:/Users/henriquecampaner/Android/Sdk/platform-tools
 
 Yarn version: 
   1.22.4
@@ -14,7 +14,7 @@ Platform:
   darwin x64
 
 Trace: 
-  Error: https://registry.npmjs.org/coverals: Not found
+  Error: https://registry.npmjs.org/@types%2fmongo-round: Not found
       at Request.params.callback [as _callback] (/usr/local/lib/node_modules/yarn/lib/cli.js:66987:18)
       at Request.self.callback (/usr/local/lib/node_modules/yarn/lib/cli.js:140748:22)
       at Request.emit (events.js:315:20)
@@ -29,13 +29,13 @@ Trace:
 npm manifest: 
   {
     "name": "node",
-    "version": "1.3.0",
+    "version": "2.4.0",
     "description": "NodeJs Rest API using TDD, Clean Architecture and Typescript",
     "main": "index.js",
     "scripts": {
       "start": "node dist/main/server.js",
       "debug": "nodemon -L --watch ./dist --inspect=0.0.0.0:9222 --nolazy ./dist/main/server.js",
-      "build": "rimraf dist && tsc",
+      "build": "rimraf dist && tsc -p tsconfig-build.json",
       "up": "npm run build && docker-compose up -d",
       "down": "docker-compose down",
       "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
@@ -43,7 +43,8 @@ npm manifest:
       "test:unit": "npm test -- --watch -c jest-unit-config.js",
       "test:integration": "npm test -- --watch -c jest-integration-config.js",
       "test:staged": "npm test -- --findRelatedTests",
-      "test:ci": "npm test -- --coverage"
+      "test:ci": "npm test -- --coverage",
+      "test:coveralls": "npm run test:ci && coveralls < coverage/lcov.info"
     },
     "keywords": [],
     "author": "",
@@ -57,18 +58,24 @@ npm manifest:
       "@types/mongodb": "^3.6.3",
       "@types/node": "^14.14.16",
       "@types/supertest": "^2.0.10",
+      "@types/swagger-ui-express": "^4.1.2",
       "@types/validator": "^13.1.2",
       "@typescript-eslint/eslint-plugin": "^4.11.0",
       "@typescript-eslint/parser": "^4.11.0",
+      "coveralls": "^3.1.0",
       "eslint": "^7.16.0",
+      "eslint-config-prettier": "^8.1.0",
       "eslint-config-standard": "^16.0.2",
       "eslint-plugin-import": "^2.22.1",
       "eslint-plugin-node": "^11.1.0",
+      "eslint-plugin-prettier": "^3.3.1",
       "eslint-plugin-promise": "^4.2.1",
       "git-commit-msg-linter": "^3.0.0",
       "husky": "^4.3.6",
       "jest": "^26.6.3",
       "lint-staged": "^10.5.3",
+      "mockdate": "^3.0.2",
+      "prettier": "^2.2.1",
       "rimraf": "^3.0.2",
       "supertest": "^6.0.1",
       "ts-jest": "^26.4.4",
@@ -78,12 +85,18 @@ npm manifest:
       "bcrypt": "^5.0.0",
       "express": "^4.17.1",
       "jsonwebtoken": "^8.5.1",
+      "module-alias": "^2.2.2",
+      "mongo-round": "^1.0.0",
       "mongodb": "^3.6.3",
       "nodemon": "^2.0.7",
+      "swagger-ui-express": "^4.1.6",
       "validator": "^13.5.2"
     },
     "engines": {
       "node": "14.x"
+    },
+    "_moduleAliases": {
+      "@": "dist"
     }
   }
 
@@ -728,7 +741,7 @@ Lockfile:
       "@types/qs" "*"
       "@types/range-parser" "*"
   
-  "@types/express@^4.17.9":
+  "@types/express@*", "@types/express@^4.17.9":
     version "4.17.11"
     resolved "https://registry.yarnpkg.com/@types/express/-/express-4.17.11.tgz#debe3caa6f8e5fcda96b47bd54e2f40c4ee59545"
     integrity sha512-no+R6rW60JEc59977wIxreQVsIEOAYwgCqldrA/vkpCnbD7MqTefO97lmoBe4WE0F156bC4uLSP1XHDOySnChg==
@@ -893,6 +906,14 @@ Lockfile:
     integrity sha512-Xt8TbEyZTnD5Xulw95GLMOkmjGICrOQyJ2jqgkSjAUR3mm7pAIzSR0NFBaMcwlzVvlpCjNwbATcWWwjNiZiFrQ==
     dependencies:
       "@types/superagent" "*"
+  
+  "@types/swagger-ui-express@^4.1.2":
+    version "4.1.2"
+    resolved "https://registry.yarnpkg.com/@types/swagger-ui-express/-/swagger-ui-express-4.1.2.tgz#cfc884904a104c3193f46f423d04ee0416be1ef4"
+    integrity sha512-t9teFTU8dKe69rX9EwL6OM2hbVquYdFM+sQ0REny4RalPlxAm+zyP04B12j4c7qEuDS6CnlwICywqWStPA3v4g==
+    dependencies:
+      "@types/express" "*"
+      "@types/serve-static" "*"
   
   "@types/tmp@^0.2.0":
     version "0.2.0"
@@ -1812,6 +1833,17 @@ Lockfile:
       path-type "^4.0.0"
       yaml "^1.10.0"
   
+  coveralls@^3.1.0:
+    version "3.1.0"
+    resolved "https://registry.yarnpkg.com/coveralls/-/coveralls-3.1.0.tgz#13c754d5e7a2dd8b44fe5269e21ca394fb4d615b"
+    integrity sha512-sHxOu2ELzW8/NC1UP5XVLbZDzO4S3VxfFye3XYCznopHy02YjNkHcj5bKaVw2O7hVaBdBjEdQGpie4II1mWhuQ==
+    dependencies:
+      js-yaml "^3.13.1"
+      lcov-parse "^1.0.0"
+      log-driver "^1.2.7"
+      minimist "^1.2.5"
+      request "^2.88.2"
+  
   cross-spawn@^6.0.0:
     version "6.0.5"
     resolved "https://registry.yarnpkg.com/cross-spawn/-/cross-spawn-6.0.5.tgz#4a5ec7c64dfae22c3a14124dbacdee846d80cbc4"
@@ -2185,6 +2217,11 @@ Lockfile:
     optionalDependencies:
       source-map "~0.6.1"
   
+  eslint-config-prettier@^8.1.0:
+    version "8.1.0"
+    resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-8.1.0.tgz#4ef1eaf97afe5176e6a75ddfb57c335121abc5a6"
+    integrity sha512-oKMhGv3ihGbCIimCAjqkdzx2Q+jthoqnXSP+d86M9tptwugycmTFdVR4IpLgq2c4SHifbwO90z2fQ8/Aio73yw==
+  
   eslint-config-standard@^16.0.2:
     version "16.0.2"
     resolved "https://registry.yarnpkg.com/eslint-config-standard/-/eslint-config-standard-16.0.2.tgz#71e91727ac7a203782d0a5ca4d1c462d14e234f6"
@@ -2244,6 +2281,13 @@ Lockfile:
       minimatch "^3.0.4"
       resolve "^1.10.1"
       semver "^6.1.0"
+  
+  eslint-plugin-prettier@^3.3.1:
+    version "3.3.1"
+    resolved "https://registry.yarnpkg.com/eslint-plugin-prettier/-/eslint-plugin-prettier-3.3.1.tgz#7079cfa2497078905011e6f82e8dd8453d1371b7"
+    integrity sha512-Rq3jkcFY8RYeQLgk2cCwuc0P7SEFwDravPhsJZOQ5N4YI4DSg50NyqJ/9gdZHzQlHf8MvafSesbNJCcP/FF6pQ==
+    dependencies:
+      prettier-linter-helpers "^1.0.0"
   
   eslint-plugin-promise@^4.2.1:
     version "4.3.1"
@@ -2513,6 +2557,11 @@ Lockfile:
     version "3.1.3"
     resolved "https://registry.yarnpkg.com/fast-deep-equal/-/fast-deep-equal-3.1.3.tgz#3a7d56b559d6cbc3eb512325244e619a65c6c525"
     integrity sha512-f3qQ9oQy9j2AhBe/H9VC91wLmKBCCU/gDOnKNAYG5hswO7BLKj09Hc5HYNz9cGI++xlpDCIgDaitVs03ATR84Q==
+  
+  fast-diff@^1.1.2:
+    version "1.2.0"
+    resolved "https://registry.yarnpkg.com/fast-diff/-/fast-diff-1.2.0.tgz#73ee11982d86caaf7959828d519cfe927fac5f03"
+    integrity sha512-xJuoT5+L99XlZ8twedaRf6Ax2TgQVxvgZOYoPKqZufmJib0tL2tegPBOZb1pVNgIhlqDlA0eO0c3wBvQcmzx4w==
   
   fast-glob@^3.1.1:
     version "3.2.5"
@@ -4048,6 +4097,11 @@ Lockfile:
     dependencies:
       package-json "^6.3.0"
   
+  lcov-parse@^1.0.0:
+    version "1.0.0"
+    resolved "https://registry.yarnpkg.com/lcov-parse/-/lcov-parse-1.0.0.tgz#eb0d46b54111ebc561acb4c408ef9363bdc8f7e0"
+    integrity sha1-6w1GtUER68VhrLTECO+TY73I9+A=
+  
   leven@^3.1.0:
     version "3.1.0"
     resolved "https://registry.yarnpkg.com/leven/-/leven-3.1.0.tgz#77891de834064cccba82ae7842bb6b14a13ed7f2"
@@ -4198,6 +4252,11 @@ Lockfile:
     version "4.17.20"
     resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.20.tgz#b44a9b6297bcb698f1c51a3545a2b3b368d59c52"
     integrity sha512-PlhdFcillOINfeV7Ni6oF1TAEayyZBoZ8bcshTHqOYJYlrqzRK5hagpagky5o4HfCzzd1TRkXPMFq6cKk9rGmA==
+  
+  log-driver@^1.2.7:
+    version "1.2.7"
+    resolved "https://registry.yarnpkg.com/log-driver/-/log-driver-1.2.7.tgz#63b95021f0702fedfa2c9bb0a24e7797d71871d8"
+    integrity sha512-U7KCmLdqsGHBLeWqYlFA0V0Sl6P08EE1ZrmA9cxjUE0WVqT9qnyVDPz1kzpFEP0jdJuFnasWIfSd7fsaNXkpbg==
   
   log-symbols@^4.0.0:
     version "4.0.0"
@@ -4404,6 +4463,21 @@ Lockfile:
     integrity sha512-NKmAlESf6jMGym1++R0Ra7wvhV+wFW63FaSOFPwRahvea0gMUcGUhVeAg/0BC0wiv9ih5NYPB1Wn1UEI1/L+xQ==
     dependencies:
       minimist "^1.2.5"
+  
+  mockdate@^3.0.2:
+    version "3.0.2"
+    resolved "https://registry.yarnpkg.com/mockdate/-/mockdate-3.0.2.tgz#a5a7bb5820da617747af424d7a4dcb22c6c03d79"
+    integrity sha512-ldfYSUW1ocqSHGTK6rrODUiqAFPGAg0xaHqYJ5tvj1hQyFsjuHpuWgWFTZWwDVlzougN/s2/mhDr8r5nY5xDpA==
+  
+  module-alias@^2.2.2:
+    version "2.2.2"
+    resolved "https://registry.yarnpkg.com/module-alias/-/module-alias-2.2.2.tgz#151cdcecc24e25739ff0aa6e51e1c5716974c0e0"
+    integrity sha512-A/78XjoX2EmNvppVWEhM2oGk3x4lLxnkEA4jTbaK97QKSDjkIoOsKQlfylt/d3kKKi596Qy3NP5XrXJ6fZIC9Q==
+  
+  mongo-round@^1.0.0:
+    version "1.0.0"
+    resolved "https://registry.yarnpkg.com/mongo-round/-/mongo-round-1.0.0.tgz#9f22fed68480d61443dca3ebf5587e82c3004193"
+    integrity sha1-nyL+1oSA1hRD3KPr9Vh+gsMAQZM=
   
   mongodb-memory-server-core@6.6.7:
     version "6.6.7"
@@ -5051,6 +5125,18 @@ Lockfile:
     version "2.0.0"
     resolved "https://registry.yarnpkg.com/prepend-http/-/prepend-http-2.0.0.tgz#e92434bfa5ea8c19f41cdfd401d741a3c819d897"
     integrity sha1-6SQ0v6XqjBn0HN/UAddBo8gZ2Jc=
+  
+  prettier-linter-helpers@^1.0.0:
+    version "1.0.0"
+    resolved "https://registry.yarnpkg.com/prettier-linter-helpers/-/prettier-linter-helpers-1.0.0.tgz#d23d41fe1375646de2d0104d3454a3008802cf7b"
+    integrity sha512-GbK2cP9nraSSUF9N2XwUwqfzlAFlMNYYl+ShE/V+H8a9uNl/oUqB1w2EL54Jh0OlyRSd8RfWYJ3coVS4TROP2w==
+    dependencies:
+      fast-diff "^1.1.2"
+  
+  prettier@^2.2.1:
+    version "2.2.1"
+    resolved "https://registry.yarnpkg.com/prettier/-/prettier-2.2.1.tgz#795a1a78dd52f073da0cd42b21f9c91381923ff5"
+    integrity sha512-PqyhM2yCjg/oKkFPtTGUojv7gnZAoG80ttl45O6x2Ug/rMJw4wcc9k6aaf2hibP7BGVCCM33gZoGjyvt9mm16Q==
   
   pretty-format@^26.0.0, pretty-format@^26.6.2:
     version "26.6.2"
@@ -5979,6 +6065,18 @@ Lockfile:
     dependencies:
       has-flag "^4.0.0"
       supports-color "^7.0.0"
+  
+  swagger-ui-dist@^3.18.1:
+    version "3.44.1"
+    resolved "https://registry.yarnpkg.com/swagger-ui-dist/-/swagger-ui-dist-3.44.1.tgz#757385a79698b8ef7045287be585671db4e4a252"
+    integrity sha512-N0u+aN55bp53RRwi/wFbEbkQxcHqZ445ShZR/Ct1Jg+XCMxYtocrsGavh7kdNKw5+6Rs4QDD6GzUMiT28Z1u3Q==
+  
+  swagger-ui-express@^4.1.6:
+    version "4.1.6"
+    resolved "https://registry.yarnpkg.com/swagger-ui-express/-/swagger-ui-express-4.1.6.tgz#682294af3d5c70f74a1fa4d6a9b503a9ee55ea82"
+    integrity sha512-Xs2BGGudvDBtL7RXcYtNvHsFtP1DBFPMJFRxHe5ez/VG/rzVOEjazJOOSc/kSCyxreCTKfJrII6MJlL9a6t8vw==
+    dependencies:
+      swagger-ui-dist "^3.18.1"
   
   symbol-tree@^3.2.4:
     version "3.2.4"
