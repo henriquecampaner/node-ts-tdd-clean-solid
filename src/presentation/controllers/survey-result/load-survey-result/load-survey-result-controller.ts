@@ -9,7 +9,6 @@ export class LoadSurveyResultController implements Controller {
   constructor(private readonly loadSurveyById: LoadSurveyById) {}
 
   async handle(httpRequest: HttpRequest): Promise<HttpResponse> {
-    // console.log(httpRequest.params.surveyId)
     await this.loadSurveyById.loadById(httpRequest.params.surveyId)
     return Promise.resolve(null)
   }
