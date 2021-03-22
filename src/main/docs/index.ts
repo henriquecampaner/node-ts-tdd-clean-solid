@@ -1,26 +1,6 @@
-import { loginPath, surveyPath, signupPath, surveyResultPath } from './paths'
-
-import {
-  badRequest,
-  serverError,
-  unauthorized,
-  notFound,
-  forbidden,
-} from './components'
-import {
-  accountSchema,
-  loginParamsSchema,
-  errorSchema,
-  surveyAnswerSchema,
-  surveySchema,
-  surveysSchema,
-  apiKeyAuthSchema,
-  signupParamsSchema,
-  addSurveySchema,
-  saveSurveyParamsSchema,
-  surveyResultSchema,
-  surveyResultAnswerSchema,
-} from './schemas'
+import paths from './paths'
+import components from './components'
+import schemas from './schemas'
 
 export default {
   openapi: '3.0.0',
@@ -28,53 +8,31 @@ export default {
     title: 'Clean Node Api',
     description: 'API using Clean/SOLID/DDD/TDD',
     version: '1.0.0',
-  },
-  license: {
-    name: 'GPL-3.0-or-later',
-    url: 'https://spdx.org/licenses/GPL-3.0-or-later.html',
-  },
-  servers: [
-    {
-      url: '/api',
+    contact: {
+      name: 'Henrique Campaner',
+      email: 'henrique.campaner@live.com',
     },
-  ],
-  tags: [
-    {
-      name: 'Login',
-    },
-    {
-      name: 'Surveys',
-    },
-  ],
-  // API tabs (Login routes)
-  paths: {
-    '/login': loginPath,
-    '/signup': signupPath,
-    '/surveys': surveyPath,
-    '/surveys/{surveyId}/results': surveyResultPath,
+    license: {
+      name: 'GPL-3.0-or-later',
+      url: 'https://spdx.org/licenses/GPL-3.0-or-later.html'
+    }
   },
-  schemas: {
-    account: accountSchema,
-    loginParams: loginParamsSchema,
-    signupParams: signupParamsSchema,
-    error: errorSchema,
-    surveys: surveysSchema,
-    survey: surveySchema,
-    surveyAnswer: surveyAnswerSchema,
-    addSurveyParams: addSurveySchema,
-    saveSurveyParams: saveSurveyParamsSchema,
-    surveyResult: surveyResultSchema,
-    surveyResultAnswer: surveyResultAnswerSchema,
-    // key = schema inside paths
+  externalDocs: {
+    description: 'Link para o treinamento completo',
+    url: 'https://www.udemy.com/course/tdd-com-mango/?referralCode=B53CE5CA2B9AFA5A6FA1'
   },
-  components: {
-    securitySchemes: {
-      apiKeyAuth: apiKeyAuthSchema,
-    },
-    badRequest,
-    serverError,
-    unauthorized,
-    notFound,
-    forbidden,
-  },
+  servers: [{
+    url: '/api',
+    description: 'Main server'
+  }],
+  tags: [{
+    name: 'Login',
+    description: 'Login routes'
+  }, {
+    name: 'Surveys',
+    description: 'Survey Routes'
+  }],
+  paths,
+  schemas,
+  components
 }

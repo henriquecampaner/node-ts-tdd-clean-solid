@@ -1,18 +1,18 @@
-export const signupParamsSchema = {
+export const signUpParamsSchema = {
   type: 'object',
   properties: {
     name: {
-      type: 'string',
+      type: 'string'
     },
     email: {
-      type: 'string',
+      type: 'string'
     },
     password: {
-      type: 'string',
+      type: 'string'
     },
     passwordConfirmation: {
-      type: 'string',
-    },
+      type: 'string'
+    }
   },
-  required: ['name', 'email', 'password', 'passwordConfirmation'],
+  required: ['name', 'email', 'password', 'passwordConfirmation']
 }

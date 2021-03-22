@@ -1,15 +1,17 @@
-export const signupPath = {
+export const signUpPath = {
   post: {
     tags: ['Login'],
-    summary: 'Route to create a new user',
+    summary: 'API to create a user account',
+    description: 'This route can be performed by ** any user **',
     requestBody: {
+      required: true,
       content: {
         'application/json': {
           schema: {
-            $ref: '#/schemas/signupParams',
-          },
-        },
-      },
+            $ref: '#/schemas/signUpParams'
+          }
+        }
+      }
     },
     responses: {
       200: {
@@ -17,23 +19,23 @@ export const signupPath = {
         content: {
           'application/json': {
             schema: {
-              $ref: '#/schemas/account',
-            },
-          },
-        },
+              $ref: '#/schemas/account'
+            }
+          }
+        }
       },
       400: {
-        $ref: '#/components/badRequest',
+        $ref: '#/components/badRequest'
       },
       403: {
-        $ref: '#/components/forbidden',
-      },
-      500: {
-        $ref: '#/components/serverError',
+        $ref: '#/components/forbidden'
       },
       404: {
-        $ref: '#/components/notFound',
+        $ref: '#/components/notFound'
       },
-    },
-  },
+      500: {
+        $ref: '#/components/serverError'
+      }
+    }
+  }
 }

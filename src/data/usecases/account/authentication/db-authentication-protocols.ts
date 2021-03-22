@@ -1,6 +1,0 @@
-export * from '@/domain/models/account'
-export * from '@/domain/useCases/account/authentication'
-export * from '@/data/protocols/db/account/load-account-by-email-repository'
-export * from '@/data/protocols/cryptography/hash-compare'
-export * from '@/data/protocols/cryptography/encrypter'
-export * from '@/data/protocols/db/account/update-access-token-repository'

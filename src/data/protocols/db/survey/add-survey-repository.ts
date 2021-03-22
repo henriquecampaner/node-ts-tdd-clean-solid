@@ -1,5 +1,9 @@
-import { AddSurveyParams } from '@/domain/useCases/survey/add-survey'
+import { AddSurvey } from '@/domain/usecases'
 
 export interface AddSurveyRepository {
-  add(surveyData: AddSurveyParams): Promise<void>
+  add: (data: AddSurveyRepository.Params) => Promise<void>
+}
+
+export namespace AddSurveyRepository {
+  export type Params = AddSurvey.Params
 }

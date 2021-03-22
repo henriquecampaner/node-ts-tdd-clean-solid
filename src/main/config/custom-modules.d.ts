@@ -1,8 +1,5 @@
-// eslint-disable-next-line no-unused-vars
-declare namespace Express {
-  // eslint-disable-next-line no-unused-vars
+declare module Express {
   interface Request {
-    // eslint-disable-next-line camelcase
     accountId?: string
   }
 }
