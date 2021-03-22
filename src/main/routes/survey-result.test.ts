@@ -88,5 +88,28 @@ describe('PUT / suruveys/:surveyId/results', () => {
     it('Should return 403 on save survey with invalid token', async () => {
       await request(app).get('/api/surveys/any_id/results').expect(403)
     })
+
+    it('Should return 200 on sucess', async () => {
+      const accessToken = await makeAccessToken()
+      const res = await surveyCollection.insertOne({
+        question: 'Question',
+        answers: [
+          {
+            answer: 'Answer 1',
+            image: 'http://image-name.com',
+          },
+          {
+            answer: 'Answer 2',
+          },
+        ],
+        date: new Date(),
+      })
+
+      await request(app)
+        .get(`/api/surveys/${res.ops[0]._id}/results`)
+        .set('x-access-token', accessToken)
+
+        .expect(200)
+    })
   })
 })
